@@ -94,6 +94,12 @@ public class Principal extends JFrame {
 
 		JComboBox cbAlgoritmo = new JComboBox();
 		cbAlgoritmo.setBounds(351, 20, 316, 27);
+		cbAlgoritmo.addItem("Selecione");
+		cbAlgoritmo.addItem("FIFO");
+		cbAlgoritmo.addItem("SJF - Shortest Job First");
+		cbAlgoritmo.addItem("Round Robin");
+		cbAlgoritmo.addItem("N-FIFO");
+		cbAlgoritmo.addItem("SRT - Shortest Remaining Time");
 		paParametros.add(cbAlgoritmo);
 	}
 

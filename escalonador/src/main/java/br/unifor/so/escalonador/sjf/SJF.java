@@ -1,50 +1,52 @@
 package br.unifor.so.escalonador.sjf;
 
-import java.util.Scanner;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SJF {
+import br.unifor.so.escalonador.Processo;
+
+public class SJF implements Serializable {
 	
-	public static void main(String args[]) {
-		int process[] = new int[10];
-		int ptime[] = new int[10];
-		int wtime[] = new int[10];
-		int temp, n, total = 0;
-		float avg = 0;
-		Scanner get = new Scanner(System.in);
+	private static final long serialVersionUID = 2570825148671880521L;
 
-		System.out.println("Enter Number of Processes:");
-		n = get.nextInt();
-		for (int i = 0; i < n; i++) {
-			System.out.println("Enter Process " + (i + 1) + " ID: ");
-			process[i] = get.nextInt();
-			System.out.println("Enter Process " + (i + 1) + " Burst Time: ");
-			ptime[i] = get.nextInt();
+	private List<Processo> processos;
+	private int tempo;
+	private int numero;
+	private int total = 0;
+	private float avg = 0;
+	
+	public List<Processo> getProcessos() {
+		if (processos == null) {
+			processos = new ArrayList<Processo>();
 		}
-
-		for (int i = 0; i < n - 1; i++) {
-			for (int j = i + 1; j < n; j++) {
-				if (ptime[i] > ptime[j]) {
-					temp = ptime[i];
-					ptime[i] = ptime[j];
-					ptime[j] = temp;
-					temp = process[i];
-					process[i] = process[j];
-					process[j] = temp;
-				}
-			}
-		}
-
-		wtime[0] = 0;
-		for (int i = 1; i < n; i++) {
-			wtime[i] = wtime[i - 1] + ptime[i - 1];
-			total = total + wtime[i];
-		}
-		avg = (float) total / n;
-		System.out.println("P_ID P_TIME W_TIME");
-		for (int i = 0; i < n; i++) {
-			System.out.println(process[i] + "\t" + ptime[i] + "\t" + wtime[i]);
-		}
-		System.out.println("Total Waiting Time: " + total);
-		System.out.println("Average Waiting Time: " + avg);
+		return processos;
+	}
+	public void setProcessos(List<Processo> processos) {
+		this.processos = processos;
+	}
+	public int getTempo() {
+		return tempo;
+	}
+	public void setTempo(int tempo) {
+		this.tempo = tempo;
+	}
+	public int getNumero() {
+		return numero;
+	}
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public float getAvg() {
+		return avg;
+	}
+	public void setAvg(float avg) {
+		this.avg = avg;
 	}
 }

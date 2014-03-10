@@ -1,4 +1,4 @@
-package br.unifor.so.escalonador.sjf;
+package br.unifor.so.escalonador;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
