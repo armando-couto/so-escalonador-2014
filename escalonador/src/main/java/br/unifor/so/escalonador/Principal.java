@@ -1,17 +1,32 @@
 package br.unifor.so.escalonador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import br.unifor.so.escalonador.model.Processo;
 
 public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 8936578361797638901L;
 
+	private List<Processo> processosEmExecucao = new ArrayList<Processo>();
+	private List<Processo> processosAptos = new ArrayList<Processo>();
+
 	private JPanel paParametros;
+	private JScrollPane paProcessando;
+	private JScrollPane paAProcessar;
 	private JTextField tfNucleos;
 	private JTextField tfProcessos;
 	private JTextField tfQuantum;
@@ -25,7 +40,7 @@ public class Principal extends JFrame {
 		this.panelParametros();
 		this.panelProcessando();
 		this.panelAProcessar();
-		
+
 		this.nucleo();
 		this.processos();
 		this.quantum();
@@ -39,16 +54,16 @@ public class Principal extends JFrame {
 		getContentPane().add(paParametros);
 		paParametros.setLayout(null);
 	}
-	
+
 	private void panelAProcessar() {
-		JPanel paProcessando = new JPanel();
+		paProcessando = new JScrollPane();
 		paProcessando.setBorder(new TitledBorder(null, "Processando ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		paProcessando.setBounds(17, 191, 819, 119);
 		getContentPane().add(paProcessando);
 	}
 
 	private void panelProcessando() {
-		JPanel paAProcessar = new JPanel();
+		paAProcessar = new JScrollPane();
 		paAProcessar.setBorder(new TitledBorder(null, "A Processar ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		paAProcessar.setBounds(17, 322, 819, 181);
 		getContentPane().add(paAProcessar);
@@ -101,6 +116,32 @@ public class Principal extends JFrame {
 		cbAlgoritmo.addItem("N-FIFO");
 		cbAlgoritmo.addItem("SRT - Shortest Remaining Time");
 		paParametros.add(cbAlgoritmo);
+
+		JButton btnIniciar = new JButton("Iniciar");
+		btnIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				this.montarPrecessos();
+			}
+
+			private void montarPrecessos() {
+				JPanel panel = new JPanel();
+				for (int i = 0; i < Integer.parseInt(tfProcessos.getText()); i++) {
+					Processo processo = new Processo();
+					processosAptos.add(processo);
+					panel.add(processo.montarDesenhoDoProcesso());
+				}
+				panel.setAutoscrolls(true);
+				paAProcessar.setRowHeaderView(panel);
+				paAProcessar.repaint();
+				paAProcessar.revalidate();
+			}
+		});
+		btnIniciar.setBounds(569, 85, 117, 29);
+		paParametros.add(btnIniciar);
+
+		JButton btnNovoProcesso = new JButton("Novo Processos");
+		btnNovoProcesso.setBounds(696, 85, 117, 29);
+		paParametros.add(btnNovoProcesso);
 	}
 
 	public static void main(String[] args) {

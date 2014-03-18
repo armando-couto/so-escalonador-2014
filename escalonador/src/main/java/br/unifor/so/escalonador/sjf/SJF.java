@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.unifor.so.escalonador.Processo;
+import br.unifor.so.escalonador.model.Processo;
 
 public class SJF implements Serializable {
 	
