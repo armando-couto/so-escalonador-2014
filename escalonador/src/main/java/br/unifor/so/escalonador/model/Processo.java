@@ -8,6 +8,9 @@ import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
+import br.unifor.so.escalonador.Principal;
+import br.unifor.so.escalonador.algoritmo.constant.AlgoritmoENUM;
+
 public class Processo implements Comparator<Processo>, Serializable {
 
 	private static final long serialVersionUID = 1038124241569745320L;
@@ -15,6 +18,8 @@ public class Processo implements Comparator<Processo>, Serializable {
 	private Integer codigo;
 	private Integer tempoInicial;
 	private Integer tempoFinal;
+	
+	private Integer tempoAindaQueFalta;
 
 	public Processo() {
 		Random r = new Random();
@@ -47,11 +52,19 @@ public class Processo implements Comparator<Processo>, Serializable {
 			return false;
 	}
 	
+	public void calculaTempoAindaDeExecucao() {
+		this.tempoAindaQueFalta = tempoFinal - tempoInicial;
+	}
+	
 	@Override
 	public int compare(Processo o1, Processo o2) {
-		return o1.getTempoFinal().compareTo(o2.getTempoFinal());
+		if (Principal.algoritmoENUM == AlgoritmoENUM.SRT) {
+			return o1.getTempoAindaQueFalta().compareTo(o2.getTempoAindaQueFalta());
+		} else {
+			return o1.getTempoFinal().compareTo(o2.getTempoFinal());
+		}
 	}
-
+	
 	public Integer getCodigo() {
 		return codigo;
 	}
@@ -74,5 +87,13 @@ public class Processo implements Comparator<Processo>, Serializable {
 
 	public void setTempoFinal(Integer tempoFinal) {
 		this.tempoFinal = tempoFinal;
+	}
+
+	public Integer getTempoAindaQueFalta() {
+		return tempoAindaQueFalta;
+	}
+
+	public void setTempoAindaQueFalta(Integer tempoAindaQueFalta) {
+		this.tempoAindaQueFalta = tempoAindaQueFalta;
 	}
 }

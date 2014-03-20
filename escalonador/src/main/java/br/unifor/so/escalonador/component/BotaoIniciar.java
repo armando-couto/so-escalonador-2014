@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import br.unifor.so.escalonador.Principal;
+import br.unifor.so.escalonador.RR;
 import br.unifor.so.escalonador.algoritmo.FIFO;
+import br.unifor.so.escalonador.algoritmo.NFIFO;
 import br.unifor.so.escalonador.algoritmo.SJF;
+import br.unifor.so.escalonador.algoritmo.SRT;
 
 public class BotaoIniciar implements ActionListener {
 
@@ -27,13 +30,15 @@ public class BotaoIniciar implements ActionListener {
 			break;
 		case 3:
 			Principal.tfQuantum.setEditable(true);
-
+			Principal.btnIniciar.addActionListener(new RR());
 			break;
 		case 4:
-
+			Principal.tfQuantum.setEditable(false);
+			Principal.btnIniciar.addActionListener(new NFIFO());
 			break;
 		case 5:
-
+			Principal.tfQuantum.setEditable(false);
+			Principal.btnIniciar.addActionListener(new SRT());
 			break;
 		}
 	}
