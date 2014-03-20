@@ -25,7 +25,7 @@ public class Processo implements Serializable {
 	public JLabel montarDesenhoDoProcesso() {
 		StringBuilder sb = new StringBuilder();
 		JLabel label = new JLabel();
-		sb.append("<html>I: " + this.codigo + "<br>");
+		sb.append("<html>Id: " + this.codigo + "<br>");
 		sb.append("TI: " + this.tempoInicial + "<br>");
 		sb.append("TF: " + this.tempoFinal + "<br></html");
 		label.setText(sb.toString());
