@@ -5,30 +5,30 @@ import java.awt.event.ActionListener;
 
 import br.unifor.so.escalonador.Principal;
 import br.unifor.so.escalonador.algoritmo.FIFO;
+import br.unifor.so.escalonador.algoritmo.SJF;
 
 public class BotaoNovoProcesso implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		switch (Principal.cbAlgoritmo.getSelectedItem().toString()) {
-		case "FIFO":
+		switch (Principal.algoritmoENUM.getId()) {
+		case 1:
 			FIFO fifo = new FIFO();
 			fifo.criarProcessos();
 			fifo.montarPrecessos();
 			break;
-		case "SJF - Shortest Job First":
+		case 2:
+			SJF sjf = new SJF();
+			sjf.criarProcessos();
+			sjf.montarPrecessos();
+			break;
+		case 3:
 
 			break;
-		case "Round Robin":
+		case 4:
 
 			break;
-		case "N-FIFO":
-
-			break;
-		case "SRT - Shortest Remaining Time":
-
-			break;
-		default:
+		case 5:
 
 			break;
 		}

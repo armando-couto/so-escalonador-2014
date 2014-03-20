@@ -2,18 +2,15 @@ package br.unifor.so.escalonador.algoritmo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import br.unifor.so.escalonador.Principal;
 import br.unifor.so.escalonador.model.Processo;
-import br.unifor.so.escalonador.model.thread.ProcessoThreadFIFO;
+import br.unifor.so.escalonador.model.thread.ProcessoThreadSJF;
 
 /**
  * Shortest Job First - SJF
@@ -36,7 +33,7 @@ public class SJF implements ActionListener {
 		this.montarNucleos();
 		this.montarPrecessos();
 		
-		Principal.processamento = new ProcessoThreadFIFO();
+		Principal.processamento = new ProcessoThreadSJF();
 		Principal.processamento.start();
 	}
 
@@ -45,17 +42,9 @@ public class SJF implements ActionListener {
 			Processo processo = new Processo();
 			Principal.processosAptos.add(processo);
 		}
-		this.organizar();
+		Collections.sort(Principal.processosAptos, new Processo());
 	}
 	
-	private void organizar() {
-		Collections.sort(Principal.processosAptos, new Processo());
-		
-		for (Processo processo : Principal.processosAptos) {
-			System.out.println(processo.getTempoFinal());
-		}
-	}
-
 	private void montarNucleos() {
 		JPanel panel = new JPanel();
 		Principal.paProcessando.removeAll();

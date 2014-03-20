@@ -12,8 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import br.unifor.so.escalonador.component.BotaoNovo;
+import br.unifor.so.escalonador.algoritmo.constant.AlgoritmoENUM;
+import br.unifor.so.escalonador.component.BotaoIniciar;
 import br.unifor.so.escalonador.component.BotaoNovoProcesso;
+import br.unifor.so.escalonador.component.ComboBoxSelecao;
 import br.unifor.so.escalonador.model.Processo;
 
 public class Principal extends JFrame {
@@ -33,6 +35,8 @@ public class Principal extends JFrame {
 	public static JTextField tfNucleos;
 	public static JTextField tfProcessos;
 	public static JTextField tfQuantum;
+	public static AlgoritmoENUM algoritmoENUM;
+	
 	@SuppressWarnings("rawtypes")
 	public static JComboBox cbAlgoritmo;
 	public static JButton btnIniciar;
@@ -46,6 +50,8 @@ public class Principal extends JFrame {
 		this.setSize(850, 550);
 		spaProcessando = new JScrollPane(paProcessando);
 		spaAProcessar = new JScrollPane(paAProcessar);
+		
+		algoritmoENUM = AlgoritmoENUM.SELECIONE;
 
 		this.panelParametros();
 		this.panelProcessando();
@@ -124,12 +130,12 @@ public class Principal extends JFrame {
 
 		cbAlgoritmo = new JComboBox();
 		cbAlgoritmo.setBounds(351, 20, 316, 27);
-		cbAlgoritmo.addItem("Selecione");
-		cbAlgoritmo.addItem("FIFO");
-		cbAlgoritmo.addItem("SJF - Shortest Job First");
-		cbAlgoritmo.addItem("Round Robin");
-		cbAlgoritmo.addItem("N-FIFO");
-		cbAlgoritmo.addItem("SRT - Shortest Remaining Time");
+		cbAlgoritmo.addItem(AlgoritmoENUM.SELECIONE.getDescricao());
+		cbAlgoritmo.addItem(AlgoritmoENUM.FIFO.getDescricao());
+		cbAlgoritmo.addItem(AlgoritmoENUM.SJF.getDescricao());
+		cbAlgoritmo.addItem(AlgoritmoENUM.RR.getDescricao());
+		cbAlgoritmo.addItem(AlgoritmoENUM.N_FIFO.getDescricao());
+		cbAlgoritmo.addItem(AlgoritmoENUM.SRT.getDescricao());
 		paParametros.add(cbAlgoritmo);
 	}
 
@@ -142,8 +148,8 @@ public class Principal extends JFrame {
 		btnNovoProcesso.setBounds(661, 85, 152, 29);
 		paParametros.add(btnNovoProcesso);
 		
-//		btnIniciar.addActionListener(new BotaoNovo());
-		cbAlgoritmo.addActionListener(new BotaoNovo());
+		cbAlgoritmo.addActionListener(new ComboBoxSelecao());
+		btnIniciar.addActionListener(new BotaoIniciar());
 		btnNovoProcesso.addActionListener(new BotaoNovoProcesso());
 	}
 
