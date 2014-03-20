@@ -2,18 +2,19 @@ package br.unifor.so.escalonador.model;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-public class Processo implements Serializable {
+public class Processo implements Comparator<Processo>, Serializable {
 
 	private static final long serialVersionUID = 1038124241569745320L;
 
-	private int codigo;
-	private int tempoInicial;
-	private int tempoFinal;
+	private Integer codigo;
+	private Integer tempoInicial;
+	private Integer tempoFinal;
 
 	public Processo() {
 		Random r = new Random();
@@ -45,41 +46,33 @@ public class Processo implements Serializable {
 		else
 			return false;
 	}
-
+	
 	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Processo [codigo=");
-		builder.append(codigo);
-		builder.append(", tempoInicial=");
-		builder.append(tempoInicial);
-		builder.append(", tempoFinal=");
-		builder.append(tempoFinal);
-		builder.append("]");
-		return builder.toString();
+	public int compare(Processo o1, Processo o2) {
+		return o1.getTempoFinal().compareTo(o2.getTempoFinal());
 	}
 
-	public int getCodigo() {
+	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(int codigo) {
+	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 
-	public int getTempoInicial() {
+	public Integer getTempoInicial() {
 		return tempoInicial;
 	}
 
-	public void setTempoInicial(int tempoInicial) {
+	public void setTempoInicial(Integer tempoInicial) {
 		this.tempoInicial = tempoInicial;
 	}
 
-	public int getTempoFinal() {
+	public Integer getTempoFinal() {
 		return tempoFinal;
 	}
 
-	public void setTempoFinal(int tempoFinal) {
+	public void setTempoFinal(Integer tempoFinal) {
 		this.tempoFinal = tempoFinal;
 	}
 }

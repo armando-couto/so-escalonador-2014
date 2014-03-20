@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import br.unifor.so.escalonador.Principal;
 import br.unifor.so.escalonador.algoritmo.FIFO;
+import br.unifor.so.escalonador.algoritmo.SJF;
 
 public class BotaoNovo implements ActionListener {
 
@@ -15,7 +16,7 @@ public class BotaoNovo implements ActionListener {
 			Principal.btnIniciar.addActionListener(new FIFO());
 			break;
 		case "SJF - Shortest Job First":
-
+			Principal.btnIniciar.addActionListener(new SJF());
 			break;
 		case "Round Robin":
 

@@ -2,7 +2,11 @@ package br.unifor.so.escalonador.algoritmo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.DatabaseMetaData;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,13 +16,13 @@ import br.unifor.so.escalonador.model.Processo;
 import br.unifor.so.escalonador.model.thread.ProcessoThreadFIFO;
 
 /**
- * First In, First Out - FIFO
+ * Shortest Job First - SJF
  * 
  * @author armandocouto
  * @email coutoarmando@gmail.com
  * @date 20/03/2014
  */
-public class FIFO implements ActionListener {
+public class SJF implements ActionListener {
 
 	@Override
 	@SuppressWarnings("deprecation")
@@ -40,6 +44,15 @@ public class FIFO implements ActionListener {
 		for (int i = 0; i < Integer.parseInt(Principal.tfProcessos.getText()); i++) {
 			Processo processo = new Processo();
 			Principal.processosAptos.add(processo);
+		}
+		this.organizar();
+	}
+	
+	private void organizar() {
+		Collections.sort(Principal.processosAptos, new Processo());
+		
+		for (Processo processo : Principal.processosAptos) {
+			System.out.println(processo.getTempoFinal());
 		}
 	}
 
