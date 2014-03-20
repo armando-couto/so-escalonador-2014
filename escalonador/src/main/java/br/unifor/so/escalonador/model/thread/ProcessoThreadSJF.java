@@ -30,19 +30,15 @@ public class ProcessoThreadSJF extends Thread {
 						for (Processo processoAptos : Principal.processosAptos) {
 							panelAptos.add(processoAptos.montarDesenhoDoProcesso());
 						}
-						Principal.paAProcessar.add(new JScrollPane(panelAptos));
-						Principal.paAProcessar.repaint();
-						Principal.paAProcessar.revalidate();
+						Principal.reorganizarAProcessar(panelAptos);
 					} 
 				} else {
 					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoProcesso());
 					Principal.processosEmExecucao.set(i, processo);
 				}
 			}
-			Principal.paProcessando.removeAll();
-			Principal.paProcessando.add(new JScrollPane(panel));
-			Principal.paProcessando.repaint();
-			Principal.paProcessando.revalidate();
+			Principal.reorganizarProcessando(panel);
+
 			try {
 				checar = !Principal.processosEmExecucao.isEmpty();
 				Principal.processamento.sleep(1000);

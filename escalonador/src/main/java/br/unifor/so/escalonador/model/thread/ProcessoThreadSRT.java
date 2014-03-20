@@ -5,8 +5,9 @@ import javax.swing.JPanel;
 import br.unifor.so.escalonador.Principal;
 import br.unifor.so.escalonador.model.Processo;
 
-public class ProcessoThreadFIFO extends Thread {
+public class ProcessoThreadSRT extends Thread {
 
+	@Override
 	@SuppressWarnings("static-access")
 	public void run() {
 		boolean checar = true;

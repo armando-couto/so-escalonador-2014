@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import br.unifor.so.escalonador.Principal;
-import br.unifor.so.escalonador.RR;
 import br.unifor.so.escalonador.algoritmo.FIFO;
 import br.unifor.so.escalonador.algoritmo.NFIFO;
+import br.unifor.so.escalonador.algoritmo.RR;
 import br.unifor.so.escalonador.algoritmo.SJF;
 import br.unifor.so.escalonador.algoritmo.SRT;
 

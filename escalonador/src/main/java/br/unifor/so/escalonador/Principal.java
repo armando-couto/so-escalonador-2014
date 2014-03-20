@@ -47,7 +47,7 @@ public class Principal extends JFrame {
 		setTitle("Escalonador\n");
 		getContentPane().setLayout(null);
 
-		this.setSize(850, 550);
+		this.setSize(850, 420);
 		spaProcessando = new JScrollPane(paProcessando);
 		spaAProcessar = new JScrollPane(paAProcessar);
 		
@@ -76,7 +76,7 @@ public class Principal extends JFrame {
 	private void panelProcessando() {
 		paProcessando = new JPanel();
 		paProcessando.setBorder(new TitledBorder(null, "Processando ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paProcessando.setBounds(17, 191, 819, 104);
+		paProcessando.setBounds(17, 151, 819, 104);
 		getContentPane().add(paProcessando);
 		paProcessando.setLayout(new BorderLayout(0, 0));
 	}
@@ -84,9 +84,13 @@ public class Principal extends JFrame {
 	private void panelAProcessar() {
 		paAProcessar = new JPanel();
 		paAProcessar.setBorder(new TitledBorder(null, "A Processar ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paAProcessar.setBounds(17, 322, 819, 104);
+		paAProcessar.setBounds(17, 267, 819, 104);
 		getContentPane().add(paAProcessar);
 		paAProcessar.setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblarmandocouto = new JLabel("©ArmandoCouto");
+		lblarmandocouto.setBounds(727, 376, 106, 16);
+		getContentPane().add(lblarmandocouto);
 	}
 
 	private void nucleo() {
@@ -151,6 +155,26 @@ public class Principal extends JFrame {
 		cbAlgoritmo.addActionListener(new ComboBoxSelecao());
 		btnIniciar.addActionListener(new BotaoIniciar());
 		btnNovoProcesso.addActionListener(new BotaoNovoProcesso());
+	}
+	
+	public static void reorganizarAProcessar(JPanel panel) {
+		Principal.paAProcessar.add(new JScrollPane(panel));
+		Principal.paAProcessar.repaint();
+		Principal.paAProcessar.revalidate();
+	}
+	
+	public static void reorganizarProcessando(JPanel panel) {
+		Principal.paProcessando.removeAll();
+		Principal.paProcessando.add(new JScrollPane(panel));
+		Principal.paProcessando.repaint();
+		Principal.paProcessando.revalidate();
+	}
+	
+	public static void reorganizarProcessandoClasse(JPanel panel) {
+		Principal.processosAptos.removeAll(Principal.processosEmExecucao);
+		Principal.paProcessando.add(new JScrollPane(panel));
+		Principal.paProcessando.repaint();
+		Principal.paProcessando.revalidate();
 	}
 
 	public static void main(String[] args) {

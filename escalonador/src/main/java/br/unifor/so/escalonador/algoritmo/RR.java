@@ -6,16 +6,16 @@ import java.util.ArrayList;
 
 import br.unifor.so.escalonador.Principal;
 import br.unifor.so.escalonador.model.Processo;
-import br.unifor.so.escalonador.model.thread.ProcessoThreadNFIFO;
+import br.unifor.so.escalonador.model.thread.ProcessoThreadRR;
 
 /**
- * N-FIFO ou filas de prioridade.
+ * Round Robin
  * 
  * @author armandocouto
  * @email coutoarmando@gmail.com
  * @date 20/03/2014
  */
-public class NFIFO extends Algoritmo implements ActionListener {
+public class RR extends Algoritmo implements ActionListener {
 
 	@Override
 	@SuppressWarnings("deprecation")
@@ -29,7 +29,7 @@ public class NFIFO extends Algoritmo implements ActionListener {
 		montarNucleos();
 		montarPrecessos();
 		
-		Principal.processamento = new ProcessoThreadNFIFO();
+		Principal.processamento = new ProcessoThreadRR();
 		Principal.processamento.start();
 	}
 }
