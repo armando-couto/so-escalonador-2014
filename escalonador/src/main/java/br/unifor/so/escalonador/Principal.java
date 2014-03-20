@@ -1,11 +1,11 @@
 package br.unifor.so.escalonador;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -21,12 +21,17 @@ public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 8936578361797638901L;
 
-	private List<Processo> processosEmExecucao = new ArrayList<Processo>();
-	private List<Processo> processosAptos = new ArrayList<Processo>();
+	private Thread processamento;
+
+	public static List<Processo> processosEmExecucao;
+	private List<Processo> processosAptos;
 
 	private JPanel paParametros;
-	private JScrollPane paProcessando;
-	private JScrollPane paAProcessar;
+	public static JPanel paProcessando;
+	private JScrollPane spaProcessando;
+	private JPanel paAProcessar;
+	private JScrollPane spaAProcessar;
+	private JComboBox cbAlgoritmo;
 	private JTextField tfNucleos;
 	private JTextField tfProcessos;
 	private JTextField tfQuantum;
@@ -36,6 +41,8 @@ public class Principal extends JFrame {
 		getContentPane().setLayout(null);
 
 		this.setSize(850, 550);
+		spaProcessando = new JScrollPane(paProcessando);
+		spaAProcessar = new JScrollPane(paAProcessar);
 
 		this.panelParametros();
 		this.panelProcessando();
@@ -45,6 +52,8 @@ public class Principal extends JFrame {
 		this.processos();
 		this.quantum();
 		this.algoritmo();
+
+		this.acoes();
 	}
 
 	private void panelParametros() {
@@ -55,18 +64,20 @@ public class Principal extends JFrame {
 		paParametros.setLayout(null);
 	}
 
-	private void panelAProcessar() {
-		paProcessando = new JScrollPane();
+	private void panelProcessando() {
+		paProcessando = new JPanel();
 		paProcessando.setBorder(new TitledBorder(null, "Processando ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paProcessando.setBounds(17, 191, 819, 119);
+		paProcessando.setBounds(17, 191, 819, 104);
 		getContentPane().add(paProcessando);
+		paProcessando.setLayout(new BorderLayout(0, 0));
 	}
 
-	private void panelProcessando() {
-		paAProcessar = new JScrollPane();
+	private void panelAProcessar() {
+		paAProcessar = new JPanel();
 		paAProcessar.setBorder(new TitledBorder(null, "A Processar ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paAProcessar.setBounds(17, 322, 819, 181);
+		paAProcessar.setBounds(17, 322, 819, 104);
 		getContentPane().add(paAProcessar);
+		paAProcessar.setLayout(new BorderLayout(0, 0));
 	}
 
 	private void nucleo() {
@@ -107,7 +118,7 @@ public class Principal extends JFrame {
 		lbAlgoritmo.setBounds(276, 24, 72, 16);
 		paParametros.add(lbAlgoritmo);
 
-		JComboBox cbAlgoritmo = new JComboBox();
+		cbAlgoritmo = new JComboBox();
 		cbAlgoritmo.setBounds(351, 20, 316, 27);
 		cbAlgoritmo.addItem("Selecione");
 		cbAlgoritmo.addItem("FIFO");
@@ -116,32 +127,131 @@ public class Principal extends JFrame {
 		cbAlgoritmo.addItem("N-FIFO");
 		cbAlgoritmo.addItem("SRT - Shortest Remaining Time");
 		paParametros.add(cbAlgoritmo);
+	}
 
+	private void acoes() {
 		JButton btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if (processamento != null)
+					processamento.stop();
+				
+				processosAptos = new ArrayList<Processo>();
+				processosEmExecucao = new ArrayList<Processo>();
+				this.criarProcessos();
+				this.montarNucleos();
 				this.montarPrecessos();
+
+				class HelloThread extends Thread {
+
+					@SuppressWarnings("static-access")
+					public void run() {
+						boolean checar = true;
+						while (checar) {
+							JPanel panel = new JPanel();
+							for (int i = 0; i < processosEmExecucao.size(); i++) {
+								Processo processo = processosEmExecucao.get(i);
+								processo.processamento();
+								if (processo.checarSeOTempoZerou()) {
+									processosEmExecucao.remove(processo);
+									if ( !processosAptos.isEmpty()) {
+										panel.add(processosAptos.get(0).montarDesenhoDoProcesso());
+										processosEmExecucao.add(processosAptos.get(0));
+										processosAptos.remove(0);
+										
+										paAProcessar.removeAll();
+										
+										JPanel panelAptos = new JPanel();
+										for (Processo processoAptos : processosAptos) {
+											panelAptos.add(processoAptos.montarDesenhoDoProcesso());
+										}
+										paAProcessar.add(new JScrollPane(panelAptos));
+										paAProcessar.repaint();
+										paAProcessar.revalidate();
+									} 
+								} else {
+									panel.add(processosEmExecucao.get(i).montarDesenhoDoProcesso());
+									processosEmExecucao.set(i, processo);
+								}
+							}
+							paProcessando.removeAll();
+							paProcessando.add(new JScrollPane(panel));
+							paProcessando.repaint();
+							paProcessando.revalidate();
+							try {
+								checar = !processosEmExecucao.isEmpty();
+								processamento.sleep(1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+				processamento = new HelloThread();
+				processamento.start();
+			}
+
+			private void criarProcessos() {
+				for (int i = 0; i < Integer.parseInt(tfProcessos.getText()); i++) {
+					Processo processo = new Processo();
+					processosAptos.add(processo);
+				}
+			}
+
+			private void montarNucleos() {
+				JPanel panel = new JPanel();
+				paProcessando.removeAll();
+				for (int i = 0; i < Integer.parseInt(tfNucleos.getText()); i++) {
+					processosEmExecucao.add(processosAptos.get(i));
+					panel.add(processosEmExecucao.get(i).montarDesenhoDoProcesso());
+				}
+				processosAptos.removeAll(processosEmExecucao);
+				paProcessando.add(new JScrollPane(panel));
+				paProcessando.repaint();
+				paProcessando.revalidate();
 			}
 
 			private void montarPrecessos() {
 				JPanel panel = new JPanel();
-				for (int i = 0; i < Integer.parseInt(tfProcessos.getText()); i++) {
-					Processo processo = new Processo();
-					processosAptos.add(processo);
-					panel.add(processo.montarDesenhoDoProcesso());
+				paAProcessar.removeAll();
+				for (int i = 0; i < processosAptos.size(); i++) {
+					panel.add(processosAptos.get(i).montarDesenhoDoProcesso());
 				}
-				panel.setAutoscrolls(true);
-				paAProcessar.setRowHeaderView(panel);
+				paAProcessar.add(new JScrollPane(panel));
 				paAProcessar.repaint();
 				paAProcessar.revalidate();
 			}
 		});
-		btnIniciar.setBounds(569, 85, 117, 29);
+		btnIniciar.setBounds(531, 85, 117, 29);
 		paParametros.add(btnIniciar);
 
 		JButton btnNovoProcesso = new JButton("Novo Processos");
-		btnNovoProcesso.setBounds(696, 85, 117, 29);
+		btnNovoProcesso.setBounds(661, 85, 152, 29);
 		paParametros.add(btnNovoProcesso);
+	}
+
+	private void escolherAlgoritmo() {
+		switch (cbAlgoritmo.getSelectedItem().toString()) {
+		case "FIFO":
+
+			break;
+		case "SJF - Shortest Job First":
+
+			break;
+		case "Round Robin":
+
+			break;
+		case "N-FIFO":
+
+			break;
+		case "SRT - Shortest Remaining Time":
+
+			break;
+		default:
+
+			break;
+		}
 	}
 
 	public static void main(String[] args) {

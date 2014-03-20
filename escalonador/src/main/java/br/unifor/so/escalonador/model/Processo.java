@@ -17,9 +17,9 @@ public class Processo implements Serializable {
 
 	public Processo() {
 		Random r = new Random();
-		this.codigo = r.nextInt(1000);
+		this.codigo = r.nextInt(40);
 		this.tempoInicial = 0;
-		this.tempoFinal = r.nextInt(Integer.MAX_VALUE);
+		this.tempoFinal = r.nextInt(100);
 	}
 	
 	public JLabel montarDesenhoDoProcesso() {
@@ -32,6 +32,31 @@ public class Processo implements Serializable {
 		label.setForeground(Color.BLUE);
 		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		return label;
+	}
+	
+	public void processamento() {
+		if (tempoInicial < tempoFinal)
+			tempoInicial++;
+	}
+	
+	public boolean checarSeOTempoZerou() {
+		if (tempoInicial >= tempoFinal)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Processo [codigo=");
+		builder.append(codigo);
+		builder.append(", tempoInicial=");
+		builder.append(tempoInicial);
+		builder.append(", tempoFinal=");
+		builder.append(tempoFinal);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	public int getCodigo() {
