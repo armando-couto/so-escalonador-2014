@@ -17,26 +17,26 @@ public class ProcessoThreadFIFO extends Thread {
 				processo.processamento();
 				if (processo.checarSeOTempoZerou()) {
 					Principal.processosEmExecucao.remove(processo);
-					if ( !Principal.processosAptos.isEmpty()) {
+					if (!Principal.processosAptos.isEmpty()) {
 						panel.add(Principal.processosAptos.get(0).montarDesenhoDoProcesso());
-						Principal.processosEmExecucao.add(Principal.processosAptos.get(0));
+						Principal.processosEmExecucao.add(i, Principal.processosAptos.get(0));
 						Principal.processosAptos.remove(0);
-						
+
 						Principal.paAProcessar.removeAll();
-						
+
 						JPanel panelAptos = new JPanel();
 						for (Processo processoAptos : Principal.processosAptos) {
 							panelAptos.add(processoAptos.montarDesenhoDoProcesso());
 						}
 						Principal.reorganizarAProcessar(panelAptos);
-					} 
+					}
 				} else {
 					panel.add(Principal.processosEmExecucao.get(i).montarDesenhoDoProcesso());
 					Principal.processosEmExecucao.set(i, processo);
 				}
 			}
 			Principal.reorganizarProcessando(panel);
-			
+
 			try {
 				checar = !Principal.processosEmExecucao.isEmpty();
 				Principal.processamento.sleep(1000);

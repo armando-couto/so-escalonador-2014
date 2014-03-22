@@ -27,7 +27,7 @@ public class RR extends Algoritmo implements ActionListener {
 		Principal.processosEmExecucao = new ArrayList<Processo>();
 		criarProcessos();
 		montarNucleos();
-		montarPrecessos();
+		montarProcessos();
 		
 		Principal.processamento = new ProcessoThreadRR();
 		Principal.processamento.start();

@@ -24,7 +24,7 @@ public abstract class Algoritmo {
 		Principal.reorganizarProcessandoClasse(panel);
 	}
 	
-	public static void montarPrecessos() {
+	public static void montarProcessos() {
 		JPanel panel = new JPanel();
 		Principal.paAProcessar.removeAll();
 		for (int i = 0; i < Principal.processosAptos.size(); i++) {

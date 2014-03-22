@@ -28,7 +28,7 @@ public class SJF extends Algoritmo implements ActionListener {
 		Principal.processosEmExecucao = new ArrayList<Processo>();
 		this.criarProcessos();
 		montarNucleos();
-		montarPrecessos();
+		montarProcessos();
 		
 		Principal.processamento = new ProcessoThreadSJF();
 		Principal.processamento.start();

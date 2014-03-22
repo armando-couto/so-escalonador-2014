@@ -18,53 +18,75 @@ public class Processo implements Comparator<Processo>, Serializable {
 	private Integer codigo;
 	private Integer tempoInicial;
 	private Integer tempoFinal;
-	
+
 	private Integer tempoAindaQueFalta;
+	private Integer prioridade;
 
 	public Processo() {
 		Random r = new Random();
-		this.codigo = r.nextInt(40);
+		Principal.codigo++;
+		this.codigo = Principal.codigo;
 		this.tempoInicial = 0;
-		this.tempoFinal = r.nextInt(100);
+		this.tempoFinal = r.nextInt(30);
 	}
-	
+
 	public JLabel montarDesenhoDoProcesso() {
 		StringBuilder sb = new StringBuilder();
 		JLabel label = new JLabel();
 		sb.append("<html>Id: " + this.codigo + "<br>");
 		sb.append("TI: " + this.tempoInicial + "<br>");
-		sb.append("TF: " + this.tempoFinal + "<br></html");
+		sb.append("TF: " + this.tempoFinal + "<br></html>");
 		label.setText(sb.toString());
 		label.setForeground(Color.BLUE);
 		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		return label;
 	}
-	
+
+	public JLabel montarDesenhoDoProcessoComPrioridade() {
+		StringBuilder sb = new StringBuilder();
+		JLabel label = new JLabel();
+		sb.append("<html>Id: " + this.codigo + "<br>");
+		sb.append("TI: " + this.tempoInicial + "<br>");
+		sb.append("TF: " + this.tempoFinal + "<br>");
+		sb.append("Pr: " + this.prioridade + "<br></html>");
+		label.setText(sb.toString());
+		label.setForeground(Color.BLUE);
+		label.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		return label;
+	}
+
 	public void processamento() {
 		if (tempoInicial < tempoFinal)
 			tempoInicial++;
 	}
-	
+
 	public boolean checarSeOTempoZerou() {
 		if (tempoInicial >= tempoFinal)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public void calculaTempoAindaDeExecucao() {
 		this.tempoAindaQueFalta = tempoFinal - tempoInicial;
 	}
-	
+
+	public void gerarPrioridade() {
+		Random r = new Random();
+		this.prioridade = r.nextInt(5);
+	}
+
 	@Override
 	public int compare(Processo o1, Processo o2) {
 		if (Principal.algoritmoENUM == AlgoritmoENUM.SRT) {
 			return o1.getTempoAindaQueFalta().compareTo(o2.getTempoAindaQueFalta());
+		} else if (Principal.algoritmoENUM == AlgoritmoENUM.N_FIFO) {
+			return o1.getPrioridade().compareTo(o2.getPrioridade());
 		} else {
 			return o1.getTempoFinal().compareTo(o2.getTempoFinal());
 		}
 	}
-	
+
 	public Integer getCodigo() {
 		return codigo;
 	}
@@ -95,5 +117,13 @@ public class Processo implements Comparator<Processo>, Serializable {
 
 	public void setTempoAindaQueFalta(Integer tempoAindaQueFalta) {
 		this.tempoAindaQueFalta = tempoAindaQueFalta;
+	}
+
+	public Integer getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(Integer prioridade) {
+		this.prioridade = prioridade;
 	}
 }

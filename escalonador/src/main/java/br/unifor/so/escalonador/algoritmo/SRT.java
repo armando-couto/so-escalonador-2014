@@ -21,7 +21,7 @@ public class SRT extends Algoritmo implements ActionListener {
 		Principal.processosEmExecucao = new ArrayList<Processo>();
 		criarProcessos();
 		montarNucleos();
-		montarPrecessos();
+		montarProcessos();
 		
 		Principal.processamento = new ProcessoThreadSRT();
 		Principal.processamento.start();

@@ -23,6 +23,8 @@ public class Principal extends JFrame {
 	private static final long serialVersionUID = 8936578361797638901L;
 
 	public static Thread processamento;
+	
+	public static int codigo = 0;
 
 	public static List<Processo> processosEmExecucao;
 	public static List<Processo> processosAptos;
@@ -47,7 +49,7 @@ public class Principal extends JFrame {
 		setTitle("Escalonador\n");
 		getContentPane().setLayout(null);
 
-		this.setSize(850, 420);
+		this.setSize(850, 430);
 		spaProcessando = new JScrollPane(paProcessando);
 		spaAProcessar = new JScrollPane(paAProcessar);
 		
@@ -76,7 +78,7 @@ public class Principal extends JFrame {
 	private void panelProcessando() {
 		paProcessando = new JPanel();
 		paProcessando.setBorder(new TitledBorder(null, "Processando ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paProcessando.setBounds(17, 151, 819, 104);
+		paProcessando.setBounds(17, 151, 819, 118);
 		getContentPane().add(paProcessando);
 		paProcessando.setLayout(new BorderLayout(0, 0));
 	}
@@ -84,12 +86,12 @@ public class Principal extends JFrame {
 	private void panelAProcessar() {
 		paAProcessar = new JPanel();
 		paAProcessar.setBorder(new TitledBorder(null, "A Processar ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		paAProcessar.setBounds(17, 267, 819, 104);
+		paAProcessar.setBounds(17, 267, 819, 118);
 		getContentPane().add(paAProcessar);
 		paAProcessar.setLayout(new BorderLayout(0, 0));
 		
 		JLabel lblarmandocouto = new JLabel("©ArmandoCouto");
-		lblarmandocouto.setBounds(727, 376, 106, 16);
+		lblarmandocouto.setBounds(727, 386, 106, 16);
 		getContentPane().add(lblarmandocouto);
 	}
 

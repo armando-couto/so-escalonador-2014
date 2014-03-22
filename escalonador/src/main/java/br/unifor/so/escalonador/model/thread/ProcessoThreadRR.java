@@ -30,7 +30,7 @@ public class ProcessoThreadRR extends Thread {
 						Principal.processosEmExecucao.remove(processo);
 						if (!Principal.processosAptos.isEmpty()) {
 							panel.add(Principal.processosAptos.get(0).montarDesenhoDoProcesso());
-							Principal.processosEmExecucao.add(Principal.processosAptos.get(0));
+							Principal.processosEmExecucao.add(i, Principal.processosAptos.get(0));
 							Principal.processosAptos.remove(0);
 
 							Principal.paAProcessar.removeAll();
@@ -55,7 +55,7 @@ public class ProcessoThreadRR extends Thread {
 				Principal.processosEmExecucao = new ArrayList<Processo>();
 				if ( !Principal.processosAptos.isEmpty()) {
 					rr.montarNucleos();
-					rr.montarPrecessos();
+					rr.montarProcessos();
 				}
 
 				contadorParaEfetuarATrocaDePosissoesNaFila = 0;

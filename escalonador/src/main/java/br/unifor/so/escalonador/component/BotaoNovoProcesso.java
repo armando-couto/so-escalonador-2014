@@ -21,30 +21,31 @@ public class BotaoNovoProcesso implements ActionListener {
 		case 1:
 			FIFO fifo = new FIFO();
 			fifo.criarProcessos();
-			fifo.montarPrecessos();
+			fifo.montarProcessos();
 			break;
 		case 2:
 			SJF sjf = new SJF();
 			sjf.criarProcessos();
-			sjf.montarPrecessos();
+			sjf.montarProcessos();
 			break;
 		case 3:
 			RR rr = new RR();
 			rr.criarProcessos();
-			Principal.processosEmExecucao = new ArrayList<Processo>();
-			rr.montarNucleos();
-			rr.montarPrecessos();
+			rr.montarProcessos();
 			break;
 		case 4:
 			NFIFO nfifo = new NFIFO();
-//			nfifo.
+			nfifo.criarProcessos();
+			Principal.processosEmExecucao = new ArrayList<Processo>();
+			nfifo.montarNucleos();
+			nfifo.montarPrecessos();
 			break;
 		case 5:
 			SRT srt = new SRT();
 			srt.criarProcessos();
 			Principal.processosEmExecucao = new ArrayList<Processo>();
 			srt.montarNucleos();
-			srt.montarPrecessos();
+			srt.montarProcessos();
 			break;
 		}
 	}

@@ -21,7 +21,7 @@ public class ProcessoThreadSJF extends Thread {
 					Principal.processosEmExecucao.remove(processo);
 					if ( !Principal.processosAptos.isEmpty()) {
 						panel.add(Principal.processosAptos.get(0).montarDesenhoDoProcesso());
-						Principal.processosEmExecucao.add(Principal.processosAptos.get(0));
+						Principal.processosEmExecucao.add(i, Principal.processosAptos.get(0));
 						Principal.processosAptos.remove(0);
 						
 						Principal.paAProcessar.removeAll();
